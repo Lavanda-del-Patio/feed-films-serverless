@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'lavanda-feed-films-serverless Sample SAM Template for lavanda-feed-films-serverless
+
+  '
+Globals:
+  Function:
+    Timeout: 120
+    MemorySize: 200
+Resources:
+  DonTorrentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: lavanda-feed-films-dontorrent
+      CodeUri: DonTorrentFunction
+      Handler: es.lavanda.feed.films.DonTorrentApp::handleRequest
+      Runtime: java11
+      Role: arn:aws:iam::836783797541:role/service-role/lavanda-feed-films-role-4pdw316k
+      Events:
+        Schedule1:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 0 * * ? *)
+            Enabled: true
+      EventInvokeConfig:
+        DestinationConfig:
+          OnSuccess:
+            Type: SQS
+            Destination: arn:aws:sqs:eu-west-1:836783797541:feed-films-pro
+  PctMixFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: lavanda-feed-films-pctmix
+      CodeUri: PctMixFunction
+      Handler: es.lavanda.feed.films.PctmixApp::handleRequest
+      Runtime: java11
+      Role: arn:aws:iam::836783797541:role/service-role/lavanda-feed-films-role-4pdw316k
+      Events:
+        Schedule1:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 0 * * ? *)
+            Enabled: true
+      EventInvokeConfig:
+        DestinationConfig:
+          OnSuccess:
+            Type: SQS
+            Destination: arn:aws:sqs:eu-west-1:836783797541:feed-films-pro
+Outputs:
+  DonTorrentFunction:
+    Description: Don Torrent Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - DonTorrentFunction
+      - Arn
+  PctMixFunction:
+    Description: Pctmix Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - PctMixFunction
+      - Arn
