@@ -49,7 +49,11 @@ Resources:
         DestinationConfig:
           OnSuccess:
             Type: SQS
-            Destination: arn:aws:sqs:eu-west-1:836783797541:feed-films-pro              
+            Destination: arn:aws:sqs:eu-west-1:836783797541:feed-films-pro
+      Environment:
+        Variables:
+          DON_TORRENT_PAGE: "https://sqs.eu-west-1.amazonaws.com/836783797541/torrent-checked-pro"     
+          PCTMIX_PAGE: "https://sqs.eu-west-1.amazonaws.com/836783797541/torrent-checked-pro"                    
 Outputs:
   DonTorrentFunction:
     Description: "Don Torrent Lambda Function ARN"
