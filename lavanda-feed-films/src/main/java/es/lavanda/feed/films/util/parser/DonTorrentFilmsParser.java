@@ -19,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DonTorrentFilmsParser extends AbstractFilmsParser {
 
-    private static final String URL_DONTORRENTS_BLURAY1080 = "https://dontorrent.vip/descargar-peliculas/hd";
-    private static final String URL_DONTORRENTS_4K = "https://dontorrent.vip/peliculas/4K";
-    private static final String URL_DONTORRENTS_DOMAIN = "https://dontorrent.vip";
+    private static final String URL_DONTORRENTS_BLURAY1080 = "https://dontorrent.ws/descargar-peliculas/hd";
+    private static final String URL_DONTORRENTS_4K = "https://dontorrent.ws/peliculas/4K";
+    private static final String URL_DONTORRENTS_DOMAIN = "https://dontorrent.ws";
     private static final String URL_HTTPS = "https:";
     private static final String BLURAY_STRING = "BluRay 1080p";
     private static final String MICROHD_4K = "4K UHDmicro";

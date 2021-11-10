@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PctmixFilmsParser extends AbstractFilmsParser {
 
-    private static final String URL_FILMS_HD = "https://atomixhq.com/peliculas-hd/";
+    private static final String URL_FILMS_HD = "https://atomixhq.one/peliculas-hd/";
     private static final String URL_HTTPS = "https:";
-    private static final String URL_HTTPS_PTCTMIX = "https://atomixhq.com";
+    private static final String URL_HTTPS_PTCTMIX = "https://atomixhq.one";
 
     private static final Pattern PATTERN_DATE_SPANISH = Pattern
             .compile("((0[1-9]|[12]\\d|3[01])/(0[1-9]|1[0-2])/[12]\\d{3})");
@@ -111,7 +111,7 @@ public class PctmixFilmsParser extends AbstractFilmsParser {
         if (Boolean.FALSE.equals(sizeElements.isEmpty())) {
             filmModelTorrent.setTorrentSize(sizeElements.first().parent().text().split("Size: ")[1]);
         }
-        filmModelTorrent.setTorrentUrl( getTorrentUrl(filmElement));
+        filmModelTorrent.setTorrentUrl(getTorrentUrl(filmElement));
         Elements torrentName = doc.getElementsByTag("a");
         if (Boolean.FALSE.equals(torrentName.isEmpty())) {
             for (Element element : torrentName) {
@@ -135,11 +135,10 @@ public class PctmixFilmsParser extends AbstractFilmsParser {
         try {
             String secondPage = URL_HTTPS_PTCTMIX
                     + filmElement.html().split("window.location.href = \"")[1].split("\";")[0];
-            String thirdPage = URL_HTTPS+
-                    this.getHTML(secondPage, StandardCharsets.ISO_8859_1).split("window.location.href = \"")[1]
+            String thirdPage = URL_HTTPS
+                    + this.getHTML(secondPage, StandardCharsets.ISO_8859_1).split("window.location.href = \"")[1]
                             .split("\";")[0];
-            return this.getHTML(thirdPage, StandardCharsets.ISO_8859_1).split("window.location.href = \"")[1]
-                    .split("\";")[0];
+            return this.getHTML(thirdPage, StandardCharsets.ISO_8859_1).split("data-u=\"")[1].split("\"")[0];
         } catch (ArrayIndexOutOfBoundsException e) {
             log.error("Not found window location href", (Throwable) e);
             throw new FeedFilmsException("Not found torrent URL");
