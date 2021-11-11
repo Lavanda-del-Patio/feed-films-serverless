@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PctmixFilmsParser extends AbstractFilmsParser {
 
-    private static final String URL_FILMS_HD = "https://atomixhq.one/peliculas-hd/";
+    private static final String URL_FILMS_HD = System.getenv("PCTMIX_PAGE") + "/peliculas-hd/";
     private static final String URL_HTTPS = "https:";
-    private static final String URL_HTTPS_PTCTMIX = "https://atomixhq.one";
+    private static final String URL_HTTPS_PTCTMIX = System.getenv("PCTMIX_PAGE");
 
     private static final Pattern PATTERN_DATE_SPANISH = Pattern
             .compile("((0[1-9]|[12]\\d|3[01])/(0[1-9]|1[0-2])/[12]\\d{3})");
