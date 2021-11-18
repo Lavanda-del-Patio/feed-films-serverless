@@ -3,6 +3,20 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   lavanda-feed-films-serverless
   Sample SAM Template for lavanda-feed-films-serverless
+Parameters:
+  Environment:
+    Type: String
+    Default: dev  
+    AllowedValues:
+      - dev
+      - pre
+      - pro
+  Enabled:
+    Type: String
+    Default: false  
+    AllowedValues:
+      - false
+      - true
 Globals:
   Function:
     Timeout: 120
@@ -11,7 +25,11 @@ Resources:
   DonTorrentFunction:
     Type: AWS::Serverless::Function 
     Properties:
-      FunctionName: lavanda-feed-films-dontorrent
+      FunctionName:  
+        !Join
+          - '-'
+          - - feed-films-dontorrent
+            - !Ref Environment      
       CodeUri: lavanda-feed-films
       Handler: es.lavanda.feed.films.DonTorrentApp::handleRequest
       Runtime: java11
@@ -21,22 +39,30 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: cron(0 0 * * ? *)
-            Enabled: true
+            Enabled: !Ref Enabled
       EventInvokeConfig:
         DestinationConfig:
           OnSuccess:
             Type: SQS
-            Destination: arn:aws:sqs:eu-west-1:836783797541:feed-films-pro
+            Destination: 
+              !Join
+                - '-'
+                - - arn:aws:sqs:eu-west-1:836783797541:feed-films
+                  - !Ref Environment 
           OnFailure:
             Type: SNS
             Destination: arn:aws:sns:eu-west-1:836783797541:telegram-message   
       Environment:
         Variables:
-          DON_TORRENT_PAGE: "https://dontorrent.win"              
+          DON_TORRENT_PAGE: "https://dontorrent.rs"              
   PctMixFunction:
     Type: AWS::Serverless::Function 
     Properties:
-      FunctionName: lavanda-feed-films-pctmix
+      FunctionName:  
+        !Join
+          - '-'
+          - - 'feed-films-pctmix'
+            - !Ref Environment 
       CodeUri: lavanda-feed-films
       Handler: es.lavanda.feed.films.PctmixApp::handleRequest
       Runtime: java11
@@ -46,12 +72,16 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: cron(0 0 * * ? *)  
-            Enabled: true   
+            Enabled: !Ref Enabled  
       EventInvokeConfig:
         DestinationConfig:
           OnSuccess:
             Type: SQS
-            Destination: arn:aws:sqs:eu-west-1:836783797541:feed-films-pro
+            Destination: 
+              !Join
+                - '-'
+                - - arn:aws:sqs:eu-west-1:836783797541:feed-films
+                  - !Ref Environment 
           OnFailure:
             Type: SNS
             Destination: arn:aws:sns:eu-west-1:836783797541:telegram-message     
