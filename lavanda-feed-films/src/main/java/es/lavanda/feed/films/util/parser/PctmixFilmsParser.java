@@ -91,7 +91,6 @@ public class PctmixFilmsParser extends AbstractFilmsParser {
         }
         Elements sinopsisElements = filmElement.getElementsByClass("sinopsis");
         Elements descriptionTopElements = filmElement.getElementsByClass("descripcion_top");
-        setTorrentTitle(descriptionTopElements, filmModelTorrent);
 
         if (Boolean.FALSE.equals(sinopsisElements.isEmpty())
                 && Boolean.FALSE.equals(descriptionTopElements.isEmpty())) {
@@ -116,19 +115,14 @@ public class PctmixFilmsParser extends AbstractFilmsParser {
         if (Boolean.FALSE.equals(torrentName.isEmpty())) {
             for (Element element : torrentName) {
                 for (Element torrentNameTag : element.getElementsByAttributeValue("href", urlFilm)) {
-                    filmModelTorrent.setTorrentTitle(torrentNameTag.text());
-                    filmModelTorrent.setTorrentCroppedTitle(torrentNameTag.text());
+                    if (torrentNameTag.attributes().size() == 1) {
+                        filmModelTorrent.setTorrentCroppedTitle(torrentNameTag.text());
+                        break;
+                    }
                 }
             }
         }
         log.info(filmModelTorrent.toString());
-    }
-
-    private void setTorrentTitle(Elements descriptionTopElements, FilmModelTorrent filmModelTorrent) {
-        List<TextNode> textNodes = descriptionTopElements.textNodes();
-        if (Boolean.FALSE.equals(textNodes.isEmpty()) && textNodes.size() > 3) {
-            filmModelTorrent.setTorrentCroppedTitle(textNodes.get(2).text().trim());
-        }
     }
 
     private String getTorrentUrl(Element filmElement) {
