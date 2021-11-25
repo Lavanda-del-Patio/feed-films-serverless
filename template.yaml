@@ -11,12 +11,6 @@ Parameters:
       - dev
       - pre
       - pro
-  Enabled:
-    Type: String
-    Default: false  
-    AllowedValues:
-      - false
-      - true
 Globals:
   Function:
     Timeout: 120
@@ -39,7 +33,7 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: cron(0 0 * * ? *)
-            Enabled: !Ref Enabled
+            Enabled: false
       EventInvokeConfig:
         DestinationConfig:
           OnSuccess:
@@ -72,7 +66,7 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: cron(0 0 * * ? *)  
-            Enabled: !Ref Enabled  
+            Enabled: false 
       EventInvokeConfig:
         DestinationConfig:
           OnSuccess:
