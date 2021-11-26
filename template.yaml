@@ -48,7 +48,7 @@ Resources:
             Destination: arn:aws:sns:eu-west-1:836783797541:telegram-message   
       Environment:
         Variables:
-          DON_TORRENT_PAGE: "https://dontorrent.xyz"              
+          DON_TORRENT_PAGE: "https://dontorrent.bz"              
   PctMixFunction:
     Type: AWS::Serverless::Function 
     Properties:
