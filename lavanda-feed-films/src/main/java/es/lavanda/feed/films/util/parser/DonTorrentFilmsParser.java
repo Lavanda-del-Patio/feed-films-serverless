@@ -89,7 +89,7 @@ public class DonTorrentFilmsParser extends AbstractFilmsParser {
         Elements images = doc.getElementsByClass("img-thumbnail float-left");
         if (Boolean.FALSE.equals(images.isEmpty())) {
             String torrentCroppedTitle = images.first().attr("alt");
-            if ("[".contains(torrentCroppedTitle)) {
+            if (torrentCroppedTitle.contains("[")) {
                 torrentCroppedTitle = torrentCroppedTitle.split("\\[")[0].trim();
             }
             filmModelTorrent.setTorrentCroppedTitle(torrentCroppedTitle);
