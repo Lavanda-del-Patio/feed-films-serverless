@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import es.lavanda.feed.films.exception.FeedFilmsException;
@@ -22,9 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PctmixFilmsParser extends AbstractFilmsParser {
 
-    private static final String URL_FILMS_HD = System.getenv("PCTMIX_PAGE") + "/peliculas-hd/";
+    private static final String URL_FILMS_HD = "https://atomixhq.one" + "/peliculas-hd/";
     private static final String URL_HTTPS = "https:";
-    private static final String URL_HTTPS_PTCTMIX = System.getenv("PCTMIX_PAGE");
+    private static final String URL_HTTPS_PTCTMIX = "https://atomixhq.one";
 
     private static final Pattern PATTERN_DATE_SPANISH = Pattern
             .compile("((0[1-9]|[12]\\d|3[01])/(0[1-9]|1[0-2])/[12]\\d{3})");
@@ -132,7 +131,8 @@ public class PctmixFilmsParser extends AbstractFilmsParser {
             String thirdPage = URL_HTTPS
                     + this.getHTML(secondPage, StandardCharsets.ISO_8859_1).split("window.location.href = \"")[1]
                             .split("\";")[0];
-            return this.getHTML(thirdPage, StandardCharsets.ISO_8859_1).split("data-u=\"")[1].split("\"")[0];
+            return this.getHTML(thirdPage, StandardCharsets.ISO_8859_1).split("data-u=\"")[1].split("\"")[0]
+                    + "atomixhq.one";
         } catch (ArrayIndexOutOfBoundsException e) {
             log.error("Not found window location href", (Throwable) e);
             throw new FeedFilmsException("Not found torrent URL");
