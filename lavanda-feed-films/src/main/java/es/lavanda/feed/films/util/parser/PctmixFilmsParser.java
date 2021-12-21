@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import es.lavanda.feed.films.exception.FeedFilmsException;
@@ -132,7 +131,8 @@ public class PctmixFilmsParser extends AbstractFilmsParser {
             String thirdPage = URL_HTTPS
                     + this.getHTML(secondPage, StandardCharsets.ISO_8859_1).split("window.location.href = \"")[1]
                             .split("\";")[0];
-            return this.getHTML(thirdPage, StandardCharsets.ISO_8859_1).split("data-u=\"")[1].split("\"")[0];
+            return this.getHTML(thirdPage, StandardCharsets.ISO_8859_1).split("data-u=\"")[1].split("\"")[0]
+                    + "atomixhq.one";
         } catch (ArrayIndexOutOfBoundsException e) {
             log.error("Not found window location href", (Throwable) e);
             throw new FeedFilmsException("Not found torrent URL");
