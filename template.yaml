@@ -32,8 +32,8 @@ Resources:
         Schedule1:
           Type: Schedule
           Properties:
-            Schedule: cron(0 0 * * ? *)
-            Enabled: false
+            Schedule: rate(6 hours)
+            Enabled: true
       EventInvokeConfig:
         DestinationConfig:
           OnSuccess:
@@ -48,7 +48,7 @@ Resources:
             Destination: arn:aws:sns:eu-west-1:836783797541:telegram-message   
       Environment:
         Variables:
-          DON_TORRENT_PAGE: "https://dontorrent.bz"              
+          DON_TORRENT_PAGE: "https://dontorrent.fun"              
   PctMixFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -65,8 +65,8 @@ Resources:
         Schedule1:
           Type: Schedule
           Properties:
-            Schedule: cron(0 0 * * ? *)  
-            Enabled: false 
+            Schedule: rate(6 hours) 
+            Enabled: true 
       EventInvokeConfig:
         DestinationConfig:
           OnSuccess:
@@ -81,7 +81,7 @@ Resources:
             Destination: arn:aws:sns:eu-west-1:836783797541:telegram-message     
       Environment:
         Variables:
-          PCTMIX_PAGE: "https://atomixhq.one"                    
+          PCTMIX_PAGE: "https://atomixhq.net"                    
 Outputs:
   DonTorrentFunction:
     Description: "Don Torrent Lambda Function ARN"
